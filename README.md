@@ -1,4 +1,3 @@
-# PO_2024_PN1500_SEKULSKI
 Piotr Sękulski
 gr 14 15:00
 lil_cegła
