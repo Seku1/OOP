@@ -1,7 +1,6 @@
 package agh.ics.oop;
 
-import java.lang.runtime.SwitchBootstraps;
-import java.sql.SQLOutput;
+import agh.ics.oop.model.MoveDirection;
 
 //ex 1-10
 //public class main {
