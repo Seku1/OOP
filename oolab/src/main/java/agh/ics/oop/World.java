@@ -2,6 +2,8 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.MoveDirection;
 
+import static agh.ics.oop.OptionsParser.OptionsPacer;
+
 //ex 1-10
 //public class main {
 //    public static void main(String[] args) {
@@ -37,25 +39,27 @@ public class World {
 
     public static void run(MoveDirection[] directions) {
         for (MoveDirection direction : directions) {
-            System.out.println(direction);
+            switch(direction) {
+                case null -> {
+                    break;
+                }
+                default -> {
+                    System.out.println(direction);
+                }
+            }
         }
     }
-    public static MoveDirection[] OptionsPacer(String[] directions){
-        MoveDirection[] result = new MoveDirection[directions.length];
-        for (int i = 0; i < directions.length; i++){
-            result[i] = switch (directions[i]){
-                case "f" -> MoveDirection.FORWARD;
-                case "b" -> MoveDirection.BACKWARD;
-                case "r" -> MoveDirection.RIGHT;
-                case "l" -> MoveDirection.LEFT;
-                default -> null;
-            };
+
+    private static String[] split_comas(String[] strings) {
+        for (int i = 0; i < strings.length; i++) {
+            strings[i] = strings[i].replaceAll(",", "");
         }
-        return result;
+        return strings;
     }
+
     public static void main(String[] args) {
         System.out.println("System wystartował.");
-        run(OptionsPacer(args));
+        run(OptionsPacer(split_comas(args)));
         System.out.println("System przestał działać.");
     }
 }
