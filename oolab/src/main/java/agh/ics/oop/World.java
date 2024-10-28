@@ -3,7 +3,9 @@ package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
 
-import static agh.ics.oop.OptionsParser.OptionsPacer;
+import java.util.List;
+import agh.ics.oop.OptionsParser;
+
 
 //ex 1-10
 //public class main {
@@ -40,28 +42,31 @@ public class World {
 
     public static void run(MoveDirection[] directions) {
         for (MoveDirection direction : directions) {
-            switch(direction) {
-                case null -> {
+            switch (direction) {
+                case FORWARD:
+                    System.out.println("Zwierzak idzie do przodu");
                     break;
-                }
-                default -> {
-                    System.out.println(direction);
-                }
+                case BACKWARD:
+                    System.out.println("Zwierzak idzie do tyłu");
+                    break;
+                case RIGHT:
+                    System.out.println("Zwierzak skreca w prawo");
+                    break;
+                case LEFT:
+                    System.out.println("Zwierzak skreca w lewo");
+                    break;
             }
         }
     }
 
-    private static String[] split_comas(String[] strings) {
-        for (int i = 0; i < strings.length; i++) {
-            strings[i] = strings[i].replaceAll(",", "");
-        }
-        return strings;
-    }
+
 
     public static void main(String[] args) {
-        System.out.println("System wystartował.");
-        run(OptionsPacer(split_comas(args)));
-        System.out.println("System przestał działać.");
+            System.out.println("Start");
+            List<MoveDirection> directions = OptionsParser.parse(args);
+//        run(directions);
+            System.out.println("Stop");
+
         Vector2d position1 = new Vector2d(1,2);
         System.out.println(position1);
         Vector2d position2 = new Vector2d(-2,1);
