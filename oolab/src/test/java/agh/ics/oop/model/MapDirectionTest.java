@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// Niepisze testów dla wszystkich enumów bo redundantne 
+// Niepisze testów dla wszystkich enumów bo redundantne
 class MapDirectionTest {
     @Test
     void toStringWorks(){
