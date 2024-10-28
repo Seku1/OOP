@@ -55,4 +55,21 @@ public class OptionsParserTest {
         );
         assertEquals(expected, OptionsParser.parse(args));
     }
+    @Test
+    void MultipleDirectionsTest2() {
+        String[] args = {"f", "x", "b", "y", "r"};
+        List<MoveDirection> expected = List.of(
+                MoveDirection.FORWARD,
+                MoveDirection.BACKWARD,
+                MoveDirection.RIGHT
+        );
+        assertEquals(expected, OptionsParser.parse(args));
+    }
+
+    @Test
+    void MultipleDirectionsTest3() {
+        String[] args = {"a", "c", "d", "e", "g"};
+        List<MoveDirection> expected = List.of();
+        assertEquals(expected, OptionsParser.parse(args));
+    }
 }
