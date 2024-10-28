@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.MoveDirection;
+import agh.ics.oop.model.Vector2d;
 
 import static agh.ics.oop.OptionsParser.OptionsPacer;
 
@@ -61,5 +62,10 @@ public class World {
         System.out.println("System wystartował.");
         run(OptionsPacer(split_comas(args)));
         System.out.println("System przestał działać.");
+        Vector2d position1 = new Vector2d(1,2);
+        System.out.println(position1);
+        Vector2d position2 = new Vector2d(-2,1);
+        System.out.println(position2);
+        System.out.println(position1.add(position2));
     }
 }
