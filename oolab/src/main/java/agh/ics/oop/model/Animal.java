@@ -11,12 +11,7 @@ public class Animal {
 
     public Animal(Vector2d position) {
         this.direction = MapDirection.NORTH;;
-        if (! position.precedes(new Vector2d(4,4)) || ! position.follows(new Vector2d(0,0))){
-            throw new IllegalArgumentException("Animal outside map");
-        }
-        else{
-            this.position = position;
-        }
+        this.position = position;
     }
 
     public MapDirection getDirection() {
@@ -27,22 +22,35 @@ public class Animal {
         return position;
     }
 
-    public void move(MoveDirection direction){
-        Vector2d prevPosition = this.getPosition();
+    public void move(MoveDirection direction, RectangularMap map){
+        Vector2d potentialNewPosition;
+
         switch (direction){
-            case RIGHT -> this.direction = this.direction.next();
-            case LEFT -> this.direction = this.direction.prev();
-            case FORWARD -> this.position = this.position.add(this.direction.toUnitVector());
-            case BACKWARD -> this.position = this.position.subtract(this.direction.toUnitVector());
-        }
-        if (! this.position.precedes(new Vector2d(4,4)) || ! this.position.follows(new Vector2d(0,0))){
-            this.position = prevPosition;
+            case RIGHT -> {
+                this.direction = this.direction.next();
+            }
+            case LEFT -> {
+                this.direction = this.direction.prev();
+            }
+            case FORWARD -> {
+                potentialNewPosition = this.position.add(this.direction.toUnitVector());
+                if (map.canMoveTo(potentialNewPosition)) {
+                    this.position = potentialNewPosition;
+                }
+            }
+            case BACKWARD -> {
+                potentialNewPosition = this.position.subtract(this.direction.toUnitVector());
+                if (map.canMoveTo(potentialNewPosition)) {
+                    this.position = potentialNewPosition;
+                }
+            }
+            default -> {break;}
         }
     }
 
     @Override
-    public String toString() {
-        return "Animal [direction=" + this.direction + ", position=" + this.position + "]";
+    public String toString(){
+        return this.direction.toString();
     }
 
     public boolean isAt(Vector2d position) {
