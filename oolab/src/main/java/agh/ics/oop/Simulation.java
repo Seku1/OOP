@@ -6,34 +6,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Simulation {
-    private final List<Animal> animalList;
-    private final List<MoveDirection> moves;
+    private final List<Animal> animals;
+    private final List<MoveDirection> directions;
     private final WorldMap map;
 
-    public Simulation(List<Vector2d> coordinates , List<MoveDirection> moves, WorldMap map){
-        this.animalList = new ArrayList<>();
-        for (Vector2d cord : coordinates) {
-            Animal animal = new Animal(cord);
-            if (map.place(animal)) {
-                this.animalList.add(animal);
+    public Simulation(List<MoveDirection> directions, List<Vector2d> positions, WorldMap map) {
+        this.animals = new ArrayList<>();
+        for (Vector2d position : positions) {
+            Animal animal = new Animal(position);
+            if(map.place(animal)){
+                this.animals.add(animal);
             }
         }
-        this.moves = moves;
+        this.directions = directions;
         this.map = map;
     }
 
-    public List<Animal> getAnimalList() {
-        return this.animalList;
-    }
-
-    public List<MoveDirection> getMoves() {
-        return moves;
+    public List<Animal> getAnimals() {
+        return this.animals;
     }
 
     public void run() {
         System.out.println(map);
-        for(int i = 0; i < moves.size(); i++){
-            map.move(animalList.get(i % animalList.size()), moves.get(i));
+        for(int i = 0; i < directions.size(); i++){
+            map.move(animals.get(i % animals.size()), directions.get(i));
             System.out.println(map);
         }
     }
