@@ -22,7 +22,7 @@ public class Animal implements WorldElement{
         return position;
     }
 
-    public void move(MoveDirection direction, RectangularMap map){
+    public void move(MoveDirection direction, WorldMap map){
         Vector2d potentialNewPosition;
 
         switch (direction){
