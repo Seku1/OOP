@@ -1,11 +1,8 @@
 package agh.ics.oop;
-
-import agh.ics.oop.model.Animal;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.*;
 
 import java.util.List;
-import agh.ics.oop.OptionsParser;
+import static agh.ics.oop.OptionsParser.parse;
 
 
 //ex 1-10
@@ -88,22 +85,16 @@ import agh.ics.oop.OptionsParser;
 
 public class World {
     public static void main(String[] args) {
+        System.out.println("system wystartowal");
 
-        // Animal manipulation
-        Animal Monkey = new Animal();
-        System.out.println(Monkey);
-        Monkey.move(MoveDirection.FORWARD);
-        Monkey.move(MoveDirection.FORWARD);
-        Monkey.move(MoveDirection.FORWARD);
-        Monkey.move(MoveDirection.FORWARD);
-        Monkey.move(MoveDirection.FORWARD);
-        Monkey.move(MoveDirection.FORWARD);
-        System.out.println(Monkey);
-        List<MoveDirection> directions = OptionsParser.parse(args);
+        // RectangularMap
+        List<MoveDirection> directions = parse(args);
         List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-        Simulation simulation = new Simulation(positions, directions);
+        WorldMap map = new RectangularMap(5,5);
+        Simulation simulation = new Simulation(directions, positions, map);
         simulation.run();
 
 
+        System.out.println("system zakonczyl dzialanie");
     }
 }
