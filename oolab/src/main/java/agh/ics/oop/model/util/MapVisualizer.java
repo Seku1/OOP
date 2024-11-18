@@ -4,7 +4,7 @@ package agh.ics.oop.model.util;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.WorldMap;
 
-/**
+/*
  * The map visualizer converts the {@link WorldMap} map into a string
  * representation.
  *
@@ -16,7 +16,7 @@ public class MapVisualizer {
     private static final String CELL_SEGMENT = "|";
     private final WorldMap map;
 
-    /**
+    /*
      * Initializes the MapVisualizer with an instance of map to visualize.
      *
      * @param map
@@ -25,7 +25,7 @@ public class MapVisualizer {
         this.map = map;
     }
 
-    /**
+    /*
      * Convert selected region of the map into a string. It is assumed that the
      * indices of the map will have no more than two characters (including the
      * sign).

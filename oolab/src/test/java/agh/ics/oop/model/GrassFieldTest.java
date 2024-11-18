@@ -63,6 +63,7 @@ public class GrassFieldTest {
         map.place(animal1);
         map.place(animal2);
         assertTrue(map.isOccupied(new Vector2d(2, 2)));
+        System.out.println(map);
     }
 
     @Test
