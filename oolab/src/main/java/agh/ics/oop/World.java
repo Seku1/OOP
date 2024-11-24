@@ -88,12 +88,16 @@ public class World {
         System.out.println("system wystartowal");
 
         // RectangularMap
-        List<MoveDirection> directions = parse(args);
-        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-        WorldMap map = new RectangularMap(5,5);
-        Simulation simulation = new Simulation(directions, positions, map);
-        simulation.run();
-
+        try {
+            List<MoveDirection> directions = parse(args);
+            List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
+            WorldMap map = new RectangularMap(5, 5);
+            Simulation simulation = new Simulation(directions, positions, map);
+            simulation.run();
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+            return;
+        }
 
         System.out.println("system zakonczyl dzialanie");
     }
