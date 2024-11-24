@@ -14,10 +14,10 @@ class MapDirectionTest {
         MapDirection S = MapDirection.SOUTH;// I don't know if redundancy
         MapDirection W = MapDirection.WEST;// I don't know if redundancy
         //then
-        assertEquals("Północ", N.toString());
-        assertEquals("Wschód", E.toString());// I don't know if redundancy
-        assertEquals("Południe", S.toString());// I don't know if redundancy
-        assertEquals("Zachód", W.toString());// I don't know if redundancy
+        assertEquals("N", N.toString());
+        assertEquals("E", E.toString());// I don't know if redundancy
+        assertEquals("S", S.toString());// I don't know if redundancy
+        assertEquals("W", W.toString());// I don't know if redundancy
     }
 
     @Test

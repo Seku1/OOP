@@ -1,7 +1,7 @@
 package agh.ics.oop.model;
 
 
-public class Animal {
+public class Animal implements WorldElement{
     private MapDirection direction;
     private Vector2d position;
     public Animal() {
@@ -22,7 +22,7 @@ public class Animal {
         return position;
     }
 
-    public void move(MoveDirection direction, RectangularMap map){
+    public void move(MoveDirection direction, WorldMap map){
         Vector2d potentialNewPosition;
 
         switch (direction){
