@@ -1,4 +1,5 @@
 package agh.ics.oop.model;
+import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.RandomPositionGenerator;
 import java.util.*;
 
@@ -42,21 +43,21 @@ public class GrassField extends AbstractWorldMap{
     }
 
     @Override
-    public String toString() {
-        Vector2d bottom = new Vector2d(upperRight.getX(), upperRight.getY());
-        Vector2d top = new Vector2d(lowerLeft.getX(), lowerLeft.getY());
+    public List<WorldElement> getElements() {
+        List<WorldElement> elements = super.getElements();
+        elements.addAll(grasses.values());
+        return elements;
+    }
+
+    @Override
+    public Boundary getBoundary() {
+        Vector2d bottom = new Vector2d(lowerLeft.getX(), lowerLeft.getY());
+        Vector2d top = new Vector2d(upperRight.getX(), upperRight.getY());
         List<WorldElement> elements = getElements();
         for (WorldElement element: elements) {
             bottom = bottom.lowerLeft(element.getPosition());
             top = top.upperRight(element.getPosition());
         }
-        return visualizer.draw(bottom, top);
-    }
-
-    @Override
-    public List<WorldElement> getElements() {
-        List<WorldElement> elements = super.getElements();
-        elements.addAll(grasses.values());
-        return elements;
+        return new Boundary(bottom, top);
     }
 }

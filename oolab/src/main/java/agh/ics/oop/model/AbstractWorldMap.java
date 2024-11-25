@@ -10,6 +10,21 @@ public abstract class AbstractWorldMap implements WorldMap {
     protected Vector2d upperRight = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
     protected final MapVisualizer visualizer = new MapVisualizer(this);
+    protected final List<MapChangeListener> observers = new ArrayList<>();
+
+    public void addObserver(MapChangeListener observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(MapChangeListener observer) {
+        observers.remove(observer);
+    }
+
+    protected void notifyObservers(String message) {
+        for (MapChangeListener observer : observers) {
+            observer.mapChanged(this, message);
+        }
+    }
 
     @Override
     public boolean canMoveTo(Vector2d position) {
@@ -20,6 +35,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     public boolean place(Animal animal) throws IncorrectPositionException {
         if (canMoveTo(animal.getPosition())) {
             animals.put(animal.getPosition(), animal);
+            notifyObservers("Animal placed: " + animal.getPosition());
             return true;
         }
         throw new IncorrectPositionException(animal.getPosition());
@@ -31,6 +47,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         animal.move(direction, this);
         animals.remove(oldPosition);
         animals.put(animal.getPosition(), animal);
+        notifyObservers("Animal moved to: " + animal.getPosition() + " from: " + oldPosition);
     }
 
     @Override
@@ -57,5 +74,8 @@ public abstract class AbstractWorldMap implements WorldMap {
         return new Boundary(lowerLeft, upperRight);
     }
 
-
+    @Override
+    public String toString() {
+        return visualizer.draw(getBoundary().lowerLeft(), getBoundary().upperRight());
+    }
 }
