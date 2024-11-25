@@ -41,7 +41,7 @@ public class OptionsParserTest {
     void parse_shouldThrowExceptionForUnknownDirection() {
         String[] args = {"x"};
         List<MoveDirection> expected = List.of();
-        assertEquals(expected, OptionsParser.parse(args));
+        assertThrows(IllegalArgumentException.class, () -> OptionsParser.parse(args));
     }
 
     @Test
@@ -63,13 +63,13 @@ public class OptionsParserTest {
                 MoveDirection.BACKWARD,
                 MoveDirection.RIGHT
         );
-        assertEquals(expected, OptionsParser.parse(args));
+        assertThrows(IllegalArgumentException.class, () -> OptionsParser.parse(args));
     }
 
     @Test
     void MultipleDirectionsTest3() {
         String[] args = {"a", "c", "d", "e", "g"};
         List<MoveDirection> expected = List.of();
-        assertEquals(expected, OptionsParser.parse(args));
+        assertThrows(IllegalArgumentException.class, () -> OptionsParser.parse(args));
     }
 }
