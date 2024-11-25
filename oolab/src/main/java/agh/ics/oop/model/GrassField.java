@@ -50,7 +50,7 @@ public class GrassField extends AbstractWorldMap{
     }
 
     @Override
-    public Boundary getBoundary() {
+    public Boundary getCurrentBounds() {
         Vector2d bottom = new Vector2d(upperRight.getX(), upperRight.getY());
         Vector2d top = new Vector2d(lowerLeft.getX(), lowerLeft.getY());
         List<WorldElement> elements = getElements();
