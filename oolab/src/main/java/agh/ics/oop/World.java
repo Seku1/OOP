@@ -25,7 +25,7 @@ public class World {
             List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(1, 3));
             List<Simulation> simulations = new ArrayList<>();
 
-            for (int i = 0; i < 1000; i++){
+            for (int i = 0; i < 10000; i++){
                 AbstractWorldMap map = i % 2 == 0 ? new GrassField(10) : new RectangularMap(5, 5);
                 map.addObserver(new ConsoleMapDisplay());
                 Simulation simulation = new Simulation(directions, positions, map);
@@ -37,7 +37,8 @@ public class World {
 //            System.out.println("run sync");
 //            engine.runSync();
             System.out.println("run async");
-            engine.runAsync();
+//            engine.runAsync();
+            engine.runAsyncInThreadPool();
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
             return;
