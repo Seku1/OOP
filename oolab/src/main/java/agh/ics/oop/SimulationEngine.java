@@ -33,7 +33,7 @@ public class SimulationEngine{
 
     public void runAsyncInThreadPool(){
         for (Simulation simulation : simulations) {
-            threadPool.execute(simulation);
+            threadPool.submit(simulation);
         }
 
         awaitTermination();
