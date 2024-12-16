@@ -22,7 +22,7 @@ public class Simulation implements Runnable {
                         this.animals.add(animal);
                     }
                 }
-            }catch (IncorrectPositionException e){
+            }catch (IncorrectPositionException e) {
                 System.out.println("!!!!!! Warning: " + e.getMessage());
             }
         }
@@ -37,10 +37,16 @@ public class Simulation implements Runnable {
     @Override
     public void run() {
         for(int i = 0; i < directions.size(); i++){
-            if (Thread.currentThread().isInterrupted()) {
-                break;
+            try {
+                Thread.sleep(500);
+                if (Thread.currentThread().isInterrupted()) {
+                    break;
+                }
+                map.move(animals.get(i % animals.size()), directions.get(i));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+
             }
-            map.move(animals.get(i % animals.size()), directions.get(i));
         }
     }
 }
