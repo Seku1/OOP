@@ -6,6 +6,7 @@ import agh.ics.oop.model.util.MapVisualizer;
 import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap {
+    protected final UUID id = UUID.randomUUID();
     protected Vector2d lowerLeft = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
     protected Vector2d upperRight = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
@@ -21,8 +22,11 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     protected void notifyObservers(String message) {
-        for (MapChangeListener observer : observers) {
-            observer.mapChanged(this, message);
+
+        synchronized (observers) {
+            for (MapChangeListener observer : observers) {
+                observer.mapChanged(this, message);
+            }
         }
     }
 
@@ -77,5 +81,10 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public String toString() {
         return visualizer.draw(getCurrentBounds().lowerLeft(), getCurrentBounds().upperRight());
+    }
+
+    @Override
+    public UUID getID() {
+        return id;
     }
 }
