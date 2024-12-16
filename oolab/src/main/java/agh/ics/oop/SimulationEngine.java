@@ -28,24 +28,28 @@ public class SimulationEngine{
             thread.start();
         }
 
-        awaitTermination();
+        awaitTerminationEnd();
     }
 
     public void runAsyncInThreadPool(){
         for (Simulation simulation : simulations) {
             threadPool.submit(simulation);
         }
-
-        awaitTermination();
+        awaitTerminationEnd();
     }
 
-    public void awaitTermination() {
+    public void awaitTerminationEnd() {
         try {
+            System.out.println("Waiting for threads to terminate...");
             for (Thread thread : threads) {
                 thread.join();
             }
             threadPool.shutdown();
-            threadPool.awaitTermination(10, TimeUnit.SECONDS);
+
+            if (!threadPool.awaitTermination(10, TimeUnit.SECONDS)) {
+                threadPool.shutdownNow();
+            }
+
 
         }catch (InterruptedException e) {
             System.out.println(e.getMessage());

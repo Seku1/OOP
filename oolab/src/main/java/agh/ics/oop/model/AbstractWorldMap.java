@@ -22,8 +22,11 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     protected void notifyObservers(String message) {
-        for (MapChangeListener observer : observers) {
-            observer.mapChanged(this, message);
+
+        synchronized (observers) {
+            for (MapChangeListener observer : observers) {
+                observer.mapChanged(this, message);
+            }
         }
     }
 
