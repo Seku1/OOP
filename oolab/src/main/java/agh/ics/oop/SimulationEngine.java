@@ -46,7 +46,7 @@ public class SimulationEngine{
             }
             threadPool.shutdown();
 
-            if (!threadPool.awaitTermination(1, TimeUnit.SECONDS)) {
+            if (!threadPool.awaitTermination(10, TimeUnit.SECONDS)) {
                 threadPool.shutdownNow();
             }
 
