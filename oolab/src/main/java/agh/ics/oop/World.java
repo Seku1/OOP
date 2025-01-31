@@ -13,15 +13,6 @@
             System.out.println("system wystartowal");
 
             try {
-    //            List<MoveDirection> directions = parse(args);
-    //            List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(1, 3));
-    //            AbstractWorldMap map1 = new GrassField(10);
-    //            AbstractWorldMap map2 = new RectangularMap(5,5);
-    //            map1.addObserver(new ConsoleMapDisplay());
-    //            map2.addObserver(new ConsoleMapDisplay());
-    //            Simulation simulation1 = new Simulation(directions, positions, map1);
-    //            Simulation simulation2 = new Simulation(directions, positions, map2);
-    //            SimulationEngine engine = new SimulationEngine(List.of(simulation1, simulation2));
 
                 List<MoveDirection> directions = parse(args);
                 List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(1, 3));
