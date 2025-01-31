@@ -4,7 +4,6 @@ import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.IncorrectPositionException;
 import agh.ics.oop.model.util.MapVisualizer;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final UUID id = UUID.randomUUID();
@@ -23,6 +22,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     protected void notifyObservers(String message) {
+
         synchronized (observers) {
             for (MapChangeListener observer : observers) {
                 observer.mapChanged(this, message);
@@ -32,7 +32,7 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return objectAt(position).map(obj -> !(obj instanceof Animal)).orElse(true);
+        return !(objectAt(position) instanceof Animal);
     }
 
     @Override
@@ -56,18 +56,22 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public boolean isOccupied(Vector2d position) {
-        return objectAt(position).isPresent();
+        return objectAt(position) != null;
     }
 
     @Override
-    public Optional<WorldElement> objectAt(Vector2d position) {
-        return Optional.ofNullable(animals.get(position));
+    public WorldElement objectAt(Vector2d position) {
+        if(animals.get(position) != null) return animals.get(position);
+        return null;
     }
 
     @Override
     public List<WorldElement> getElements() {
-        return new ArrayList<>(animals.values());
+        List<WorldElement> elements = new ArrayList<>(animals.values());
+        // Add other elements if needed
+        return elements;
     }
+
 
     @Override
     public Boundary getCurrentBounds() {
@@ -82,13 +86,5 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public UUID getID() {
         return id;
-    }
-
-    @Override
-    public ArrayList<Animal> getOrderedAnimals() {
-        return animals.values().stream()
-                .sorted(Comparator.comparing((Animal a) -> a.getPosition().getX())
-                        .thenComparing(a -> a.getPosition().getY()))
-                .collect(Collectors.toCollection(ArrayList::new));
     }
 }

@@ -9,8 +9,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -38,11 +36,11 @@ public class SimulationPresenter implements MapChangeListener {
     private int mapWidth;
     private int mapHeight;
 
-    private int width = 100;
-    private int height = 100;
+    private int width = 50;
+    private int height = 50;
 
-    private final int mapMaxHeight = 400;
-    private final int mapMaxWidth = 600;
+    private final int mapMaxHeight = 300;
+    private final int mapMaxWidth = 300;
 
     public void setWorldMap(WorldMap map) {
         this.map = map;
@@ -87,39 +85,20 @@ public class SimulationPresenter implements MapChangeListener {
         }
     }
 
-    public void addElements() {
+    public void addElements(){
         for (int i = xMin; i <= xMax; i++) {
             for (int j = yMax; j >= yMin; j--) {
                 Vector2d pos = new Vector2d(i, j);
-
-                int finalI = i;
-                int finalJ = j;
-
-                map.objectAt(pos).ifPresentOrElse(worldElement -> {
-                    if (worldElement instanceof Animal animal) {
-                        Image animalImage = createImageViewElement(animal);
-                        WorldElementBox animalBox = new WorldElementBox(animalImage, "A" + animal.getPosition().toString());
-                        mapGrid.add(animalBox, finalI - xMin + 1, yMax - finalJ + 1);
-                    } else if (worldElement instanceof Grass grass) {
-                        Image grassImage = createImageViewElement(grass);
-                        WorldElementBox grassBox = new WorldElementBox(grassImage, "Trawa");
-                        mapGrid.add(grassBox, finalI - xMin + 1, yMax - finalJ + 1);
-                    } else {
-                        Label label = new Label(worldElement.toString());
-                        mapGrid.add(label, finalI - xMin + 1, yMax - finalJ + 1);
-                        GridPane.setHalignment(label, HPos.CENTER);
-                    }
-                }, () -> {
-                    Label emptyLabel = new Label(" ");
-                    mapGrid.add(emptyLabel, finalI - xMin + 1, yMax - finalJ + 1);
-                    GridPane.setHalignment(emptyLabel, HPos.CENTER);
-                });
+                if (map.isOccupied(pos)) {
+                    mapGrid.add(new Label(map.objectAt(pos).toString()), i - xMin + 1, yMax - j + 1);
+                }
+                else {
+                    mapGrid.add(new Label(" "), i - xMin + 1, yMax - j + 1);
+                }
+                GridPane.setHalignment(mapGrid.getChildren().getLast(), HPos.CENTER);
             }
         }
     }
-
-
-
 
     private void drawMap() {
         updateBounds();
@@ -158,26 +137,5 @@ public class SimulationPresenter implements MapChangeListener {
         moveDescriptionLabel.setText("Simulation started with moves: " + moveList);
         new Thread(engine::runSync).start();
     }
-
-
-    private Image createImageViewElement(Animal animal) {
-        String imagePath;
-
-        switch (animal.getDirection()) {
-            case NORTH -> imagePath = "galley_up.jpg";
-            case SOUTH -> imagePath = "galley_down.jpg";
-            case EAST -> imagePath = "galley_left.jpg";
-            case WEST -> imagePath = "galley_right.jpg";
-            default -> throw new IllegalArgumentException("Invalid direction: " + animal.getDirection());
-        }
-
-        return new Image(imagePath); // return the image directly
-    }
-
-    private Image createImageViewElement(Grass grass) {
-        String imagePath = "grass.jpg";
-        return new Image(imagePath); // return the image directly
-    }
-
 
 }
